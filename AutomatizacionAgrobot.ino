@@ -1,6 +1,6 @@
 #include <M5Stack.h>
 
-// Constantes 
+// Constant
 
 int canalPWMCorrea=1;
 int FrecuenciaCorrea=300;
@@ -24,18 +24,33 @@ int SensorSemilla= 2;
 int SensorInductivo=18;
 
 
-void IRAM_ATTR ISR() {
-    Serial.print("Sensor Semilla");
+void IRAM_ATTR ISR() 
+{
+    Serial.print("B");
+    for (int i = 0; i <= 1000; i++) 
+      {
+       delayMicroseconds(100);
+      }
 }
 
 
-void IRAM_ATTR ISR2() {
-    Serial.print("Sensor Inductivo");
+void IRAM_ATTR ISR2() 
+{
+    Serial.print("A");
+
+    for (int i = 0; i <= 1000; i++) 
+      {
+       delayMicroseconds(100);
+      }
 }
 
-void setup() {
+    
+void setup() 
 
-// inicializacion PWM
+{
+
+   
+// init PWM
 
 M5.begin();
 ledcSetup(canalPWMCorrea,FrecuenciaCorrea,PWMCorrea);
@@ -53,27 +68,28 @@ attachInterrupt(SensorSemilla, ISR, RISING);
 attachInterrupt(SensorInductivo, ISR2, RISING);
 
 
-Serial.begin(115200);
+Serial.begin(9600);
 Serial.flush();
 delay(50);
 Serial.print("M5Stack initializing...");
  
-
-
-
 }
 
-void loop() {
+void loop() 
+
+{
 
 
 ledcWrite(canalPWMCorrea,ActivarPWM);
 ledcWrite(canalPWMPlato,ActivarPWM);
 
 
-digitalWrite(ElectroValvula,Desactivar);
-delay(5000);
-digitalWrite(ElectroValvula,Desactivar);
-delay(5000);
+//digitalWrite(Bomba,Activar);
+//delay(5000);
+//digitalWrite(Bomba,Desactivar);
+//delay(5000);
+
+delay(1000);
 
 M5.update();
 
